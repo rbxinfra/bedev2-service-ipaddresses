@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Description>Logic and operations implementation for Roblox.IpAddresses.Service</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Roblox.IpAddresses.Service" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Grpc.Core" Version="2.46.6" />
+		<PackageReference Include="Google.Protobuf" Version="3.27.2" />
+		<PackageReference Include="Grpc.Tools" Version="2.65.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Roblox.Caching" Version="1.2.4" />
+		<PackageReference Include="Roblox.Data" Version="1.2.4" />
+		<PackageReference Include="Roblox.Entities.Mssql" Version="1.2.4" />
+		<PackageReference Include="Roblox.MssqlDatabases" Version="1.2.4" />
+		<PackageReference Include="Roblox.Operations" Version="1.2.4" />
+		<PackageReference Include="Roblox.Platform.Membership" Version="1.2.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf ProtoRoot="..\..\..\protos" Include="..\..\..\protos\roblox\ip-addresses\v1\ip_addresses.proto" Link="roblox\ip-addresses\v1\ip_addresses_api.proto" GrpcServices="None" />
+		<Protobuf ProtoRoot="..\..\..\protos" Include="..\..\..\protos\roblox\ip-addresses\v1\ip_addresses_api.proto" Link="roblox\ip-addresses\v1\ip_addresses_api.proto" GrpcServices="Server" />
+	</ItemGroup>
+
+</Project>

@@ -55,7 +55,7 @@ public class SetUserMacAddressOperation : IResultOperation<V1.SetUserMacAddressR
         {
             return (new V1.SetUserMacAddressResponse
             {
-                Result = SetUserMacAddressResult.AlreadyAssociated.ToGrpc()
+                Result = V1.SetUserMacAddressResult.AlreadyAssociated
             }, null);
         }
 
@@ -67,7 +67,7 @@ public class SetUserMacAddressOperation : IResultOperation<V1.SetUserMacAddressR
 
         return (new V1.SetUserMacAddressResponse 
         { 
-            Result = SetUserMacAddressResult.Associated.ToGrpc() 
+            Result = V1.SetUserMacAddressResult.Associated 
         }, null);
     }
 }

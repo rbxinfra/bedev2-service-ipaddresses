@@ -1,3 +1,3 @@
-# Roles.IpAddresses
+# Roblox.IpAddresses
 
 Implementation for the Roblox.IpAddresses.Service operations and logic.

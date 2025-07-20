@@ -55,7 +55,7 @@ public class SetUserIpAddressOperation : IResultOperation<V1.SetUserIpAddressReq
         {
             return (new V1.SetUserIpAddressResponse
             {
-                Result = SetUserIpAddressResult.AlreadyAssociated.ToGrpc()
+                Result = V1.SetUserIpAddressResult.AlreadyAssociated
             }, null);
         }
 
@@ -67,7 +67,7 @@ public class SetUserIpAddressOperation : IResultOperation<V1.SetUserIpAddressReq
 
         return (new V1.SetUserIpAddressResponse 
         { 
-            Result = SetUserIpAddressResult.Associated.ToGrpc() 
+            Result = V1.SetUserIpAddressResult.Associated
         }, null);
     }
 }

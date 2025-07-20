@@ -85,13 +85,13 @@ public class IPAddress : IRobloxEntity<long, IPAddressDAL>, IRemoteCacheableObje
         {
             PerformStateExpirationCheck();
 
-            return _EntityDAL.State == 2;
+            return _EntityDAL.State == (byte)IpAddressState.Banned;
         }
     }
 
     private void PerformStateExpirationCheck()
     {
-        if (_EntityDAL.State == 2 &&
+        if (_EntityDAL.State == (byte)IpAddressState.Banned &&
             _EntityDAL.Expiration != null &&
             DateTime.Now >= _EntityDAL.Expiration.Value)
             return;

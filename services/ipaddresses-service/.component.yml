@@ -34,7 +34,7 @@ deployment:
           grpc: 
             to: 5000
       services:
-        - name: ${{ env.NOMAD_ENVIRONMENT }}-ipaddresses-service-grpc
+        - name: ${{ env.NOMAD_ENVIRONMENT }}-roblox-ipaddresses-service-grpc
           port: grpc
           tags:
             - ${{ env.NOMAD_ENVIRONMENT }}

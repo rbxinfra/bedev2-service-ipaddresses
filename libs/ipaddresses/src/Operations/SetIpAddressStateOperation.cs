@@ -40,20 +40,22 @@ public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateR
         if (string.IsNullOrEmpty(request.IpAddress)) return (null, new(IpAddressError.InvalidIpAddress));
         if (!_ipAddressHelper.IsValidIpAddress(request.IpAddress)) return (null, new(IpAddressError.InvalidIpAddress));
 
-        if (request.IpAddressState.FromGrpc() < IpAddressState.Allowed || 
-            request.IpAddressState.FromGrpc() > IpAddressState.Banned)
-            return (new V1.SetIpAddressStateResponse 
-            { 
-                Result = SetIpAddressStateResult.Unknown.ToGrpc() 
+        var ipAddressState = request.IpAddressState.FromGrpc();
+
+        if (ipAddressState < IpAddressState.Allowed ||
+            ipAddressState > IpAddressState.Banned)
+            return (new V1.SetIpAddressStateResponse
+            {
+                Result = SetIpAddressStateResult.Unknown.ToGrpc()
             }, new(IpAddressError.UnsupportedIpAddressState));
 
         var ipAddress = IPAddress.GetOrCreate(request.IpAddress);
-        if (ipAddress.State == request.IpAddressState.FromGrpc())
+        if (ipAddress.State == ipAddressState)
             return (new V1.SetIpAddressStateResponse {
                 Result = SetIpAddressStateResult.Unchanged.ToGrpc()
             }, null);
 
-        if (request.IpAddressState.FromGrpc() == IpAddressState.Banned)
+        if (ipAddressState == IpAddressState.Banned)
         {
             ipAddress.State = IpAddressState.Banned;
             ipAddress.Expiration = DateTime.Now.AddDays(100);
@@ -64,7 +66,7 @@ public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateR
             }, null);
         }
 
-        ipAddress.State = request.IpAddressState.FromGrpc();
+        ipAddress.State = ipAddressState;
         ipAddress.Save();
 
         return (new V1.SetIpAddressStateResponse { 

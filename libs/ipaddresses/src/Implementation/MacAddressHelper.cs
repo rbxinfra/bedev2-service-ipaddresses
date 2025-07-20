@@ -19,7 +19,7 @@ public class MacAddressHelper : IMacAddressHelper
         try
         {
             var addr = PhysicalAddress.Parse(macAddress.ToUpper());
-            if (PhysicalAddress.None == addr)
+            if (addr == PhysicalAddress.None)
                 return false;
         }
         catch (FormatException)

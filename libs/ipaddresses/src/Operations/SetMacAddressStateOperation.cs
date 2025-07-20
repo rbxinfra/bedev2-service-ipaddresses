@@ -40,35 +40,37 @@ public class SetMacAddressStateOperation : IResultOperation<V1.SetMacAddressStat
         if (string.IsNullOrEmpty(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
         if (!_macAddressHelper.IsValidMacAddress(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
 
-        if (request.MacAddressState.FromGrpc() < MacAddressState.Allowed ||
-            request.MacAddressState.FromGrpc() > MacAddressState.Banned)
+        var macAddressState = request.MacAddressState.FromGrpc();
+
+        if (macAddressState < MacAddressState.Allowed ||
+            macAddressState > MacAddressState.Banned)
             return (new V1.SetMacAddressStateResponse
             {
-                Result = SetMacAddressStateResult.Unknown.ToGrpc()
+                Result = V1.SetMacAddressStateResult.Unknown
             }, new(IpAddressError.UnsupportedMacAddressState));
 
         var macAddress = MACAddress.GetOrCreate(request.MacAddress);
-        if (macAddress.State != request.MacAddressState.FromGrpc())
+        if (macAddress.State != macAddressState)
         {
-            macAddress.State = request.MacAddressState.FromGrpc();
-            if (request.MacAddressState.FromGrpc() == MacAddressState.Banned)
+            macAddress.State = macAddressState;
+            if (macAddressState == MacAddressState.Banned)
             {
                 macAddress.Expiration = DateTime.Now.AddDays(100);
                 return (new V1.SetMacAddressStateResponse
                 {
-                    Result = SetMacAddressStateResult.BanExtended.ToGrpc()
+                    Result = V1.SetMacAddressStateResult.BanExtended
                 }, null);
             }
 
             return (new V1.SetMacAddressStateResponse
             {
-                Result = SetMacAddressStateResult.Changed.ToGrpc()
+                Result = V1.SetMacAddressStateResult.Changed
             }, null);
         }
 
         return (new V1.SetMacAddressStateResponse
         {
-            Result = SetMacAddressStateResult.Unchanged.ToGrpc()
+            Result = V1.SetMacAddressStateResult.Unchanged
         }, null);
     }
 }

@@ -86,13 +86,13 @@ public class MACAddress : IRobloxEntity<long, MACAddressDAL>, ICacheableObject<l
         {
             PerformStateExpirationCheck();
 
-            return _EntityDAL.State == 2;
+            return _EntityDAL.State == (byte)MacAddressState.Banned;
         }
     }
 
     private void PerformStateExpirationCheck()
     {
-        if (_EntityDAL.State == 2 &&
+        if (_EntityDAL.State == (byte)MacAddressState.Banned &&
             _EntityDAL.Expiration != null &&
             DateTime.Now >= _EntityDAL.Expiration.Value)
             return;

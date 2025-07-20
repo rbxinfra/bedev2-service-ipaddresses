@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roblox.IpAddresses", "libs\ipaddresses\src\Roblox.IpAddresses.csproj", "{C0521D81-4C94-9E7B-6CA5-AC295612681C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roblox.IpAddresses.Service", "services\ipaddresses-service\src\Roblox.IpAddresses.Service.csproj", "{7BE354B2-65DB-D1F1-4C3D-23C953AD7C74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0521D81-4C94-9E7B-6CA5-AC295612681C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0521D81-4C94-9E7B-6CA5-AC295612681C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0521D81-4C94-9E7B-6CA5-AC295612681C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0521D81-4C94-9E7B-6CA5-AC295612681C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BE354B2-65DB-D1F1-4C3D-23C953AD7C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BE354B2-65DB-D1F1-4C3D-23C953AD7C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BE354B2-65DB-D1F1-4C3D-23C953AD7C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BE354B2-65DB-D1F1-4C3D-23C953AD7C74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1D1572E-D1F9-416A-AB3B-B52FDB0A7AC4}
+	EndGlobalSection
+EndGlobal

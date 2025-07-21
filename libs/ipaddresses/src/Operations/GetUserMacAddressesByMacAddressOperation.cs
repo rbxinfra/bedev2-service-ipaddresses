@@ -11,11 +11,12 @@ using Operations;
 using Enums;
 using Entities;
 using Extensions;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get <see cref="UserMACAddress"/> entities by MAC Address
 /// </summary>
-public class GetUserMacAddressesByMacAddressOperation : IResultOperation<V1.GetUserMacAddressesByMacAddressRequest, V1.GetUserMacAddressesByMacAddressResponse>
+public class GetUserMacAddressesByMacAddressOperation : IResultOperation<GetUserMacAddressesByMacAddressRequest, GetUserMacAddressesByMacAddressResponse>
 {
     private readonly ILogger _logger;
 
@@ -32,7 +33,7 @@ public class GetUserMacAddressesByMacAddressOperation : IResultOperation<V1.GetU
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetUserMacAddressesByMacAddressResponse Output, OperationError Error) Execute(V1.GetUserMacAddressesByMacAddressRequest request)
+    public (GetUserMacAddressesByMacAddressResponse Output, OperationError Error) Execute(GetUserMacAddressesByMacAddressRequest request)
     {
         if (request.MacAddressId == default(long)) return (null, new(IpAddressError.InvalidUserId));
 
@@ -42,11 +43,9 @@ public class GetUserMacAddressesByMacAddressOperation : IResultOperation<V1.GetU
             request.Count
         );
 
-        return (new V1.GetUserMacAddressesByMacAddressResponse
-        {
-            UserMacAddresses =
-            {
-                macAddresses.Select(mac => new V1.UserMacAddress
+        return (new GetUserMacAddressesByMacAddressResponse {
+            UserMacAddresses = {
+                macAddresses.Select(mac => new UserMacAddress
                 {
                     UserId = mac.UserID,
                     MacAddress = MACAddress.Get(mac.MACAddressID).ToGrpc(),

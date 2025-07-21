@@ -4,6 +4,7 @@ using System;
 
 using EventLog;
 using Operations;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
@@ -12,7 +13,7 @@ using Extensions;
 /// <summary>
 /// Operation to get the status of an Ip Address
 /// </summary>
-public class GetMacAddressStatusOperation : IResultOperation<V1.GetMacAddressStatusRequest, V1.GetMacAddressStatusResponse>
+public class GetMacAddressStatusOperation : IResultOperation<GetMacAddressStatusRequest, GetMacAddressStatusResponse>
 {
     private readonly ILogger _logger;
     private readonly IMacAddressHelper _macAddressHelper;
@@ -35,15 +36,14 @@ public class GetMacAddressStatusOperation : IResultOperation<V1.GetMacAddressSta
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetMacAddressStatusResponse Output, OperationError Error) Execute(V1.GetMacAddressStatusRequest request)
+    public (GetMacAddressStatusResponse Output, OperationError Error) Execute(GetMacAddressStatusRequest request)
     {
         if (string.IsNullOrEmpty(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
         if (!_macAddressHelper.IsValidMacAddress(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
 
         var macAddress = MACAddress.GetOrCreate(request.MacAddress);
 
-        return (new V1.GetMacAddressStatusResponse
-        {
+        return (new GetMacAddressStatusResponse {
             MacAddressState = macAddress.State.ToGrpc(),
         }, null);
     }

@@ -6,10 +6,9 @@ using System;
 using System.Threading.Tasks;
 
 using Web.Framework.Services.Grpc;
+using Ipaddresses.Ipaddresses.V1;
 
-using IpAddresses.V1;
-
-using IpAddressesAPIGrpc = Roblox.IpAddresses.V1.IpAddressesAPI;
+using IpAddressesAPIGrpc = Roblox.Ipaddresses.Ipaddresses.V1.IpAddressesAPI;
 using Microsoft.AspNetCore.Authorization;
 
 /// <summary>
@@ -38,7 +37,7 @@ public class IpAddressesAPI : IpAddressesAPIGrpc.IpAddressesAPIBase
         _ipAddressesOperations = ipAddressesOperations ?? throw new ArgumentNullException(nameof(ipAddressesOperations));
     }
 
-    /// <inheritdoc cref="IpAddressesAPIGrpc.IpAddressesAPIBase.GetUserIdCountByIpAddress(V1.GetUserIdCountByIpAddressRequest, ServerCallContext)"/>
+    /// <inheritdoc cref="IpAddressesAPIGrpc.IpAddressesAPIBase.GetUserIdCountByIpAddress(GetUserIdCountByIpAddressRequest, ServerCallContext)"/>
     public override Task<GetUserIdCountByIpAddressResponse> GetUserIdCountByIpAddress(GetUserIdCountByIpAddressRequest request, ServerCallContext context)
         => Task.FromResult(_operationExecutor.Execute(_ipAddressesOperations.GetUserIdCountByIpAddress, request));
 

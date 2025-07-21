@@ -4,15 +4,17 @@ using System;
 
 using EventLog;
 using Operations;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
 using Extensions;
+using AddressState = Enums.AddressState;
 
 /// <summary>
 /// Operation to update <see cref="MACAddress"/> entities state
 /// </summary>
-public class SetMacAddressStateOperation : IResultOperation<V1.SetMacAddressStateRequest, V1.SetMacAddressStateResponse>
+public class SetMacAddressStateOperation : IResultOperation<SetMacAddressStateRequest, SetMacAddressStateResponse>
 {
     private readonly ILogger _logger;
     private readonly IMacAddressHelper _macAddressHelper;
@@ -35,7 +37,7 @@ public class SetMacAddressStateOperation : IResultOperation<V1.SetMacAddressStat
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.SetMacAddressStateResponse Output, OperationError Error) Execute(V1.SetMacAddressStateRequest request)
+    public (SetMacAddressStateResponse Output, OperationError Error) Execute(SetMacAddressStateRequest request)
     {
         if (string.IsNullOrEmpty(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
         if (!_macAddressHelper.IsValidMacAddress(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
@@ -44,9 +46,8 @@ public class SetMacAddressStateOperation : IResultOperation<V1.SetMacAddressStat
 
         if (macAddressState < AddressState.Allowed ||
             macAddressState > AddressState.Banned)
-            return (new V1.SetMacAddressStateResponse
-            {
-                Result = V1.SetAddressStateResult.Unknown
+            return (new SetMacAddressStateResponse {
+                Result = SetAddressStateResult.Unknown
             }, new(IpAddressError.UnsupportedMacAddressState));
 
         var macAddress = MACAddress.GetOrCreate(request.MacAddress);
@@ -56,21 +57,18 @@ public class SetMacAddressStateOperation : IResultOperation<V1.SetMacAddressStat
             if (macAddressState == AddressState.Banned)
             {
                 macAddress.Expiration = DateTime.Now.AddDays(100);
-                return (new V1.SetMacAddressStateResponse
-                {
-                    Result = V1.SetAddressStateResult.BanExtended
+                return (new SetMacAddressStateResponse {
+                    Result = SetAddressStateResult.BanExtended
                 }, null);
             }
 
-            return (new V1.SetMacAddressStateResponse
-            {
-                Result = V1.SetAddressStateResult.Changed
+            return (new SetMacAddressStateResponse {
+                Result = SetAddressStateResult.Changed
             }, null);
         }
 
-        return (new V1.SetMacAddressStateResponse
-        {
-            Result = V1.SetAddressStateResult.Unchanged
+        return (new SetMacAddressStateResponse {
+            Result = SetAddressStateResult.Unchanged
         }, null);
     }
 }

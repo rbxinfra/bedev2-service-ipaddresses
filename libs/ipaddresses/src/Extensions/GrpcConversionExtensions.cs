@@ -4,13 +4,13 @@ using System;
 
 using Google.Protobuf.WellKnownTypes;
 
-using GrpcIpAddress = IpAddresses.V1.IpAddress;
-using GrpcMacAddress = IpAddresses.V1.MacAddress;
-using GrpcIpAddressType = IpAddresses.V1.IpAddressType;
-using GrpcUserMacAddress = IpAddresses.V1.UserMacAddress;
-using GrpcAddressState = IpAddresses.V1.AddressState;
-using GrpcUserIpAddressV2 = IpAddresses.V1.UserIpAddressV2;
-using GrpcSetAddressStateResult = IpAddresses.V1.SetAddressStateResult;
+using GrpcIpAddress = Ipaddresses.Ipaddresses.V1.IpAddress;
+using GrpcMacAddress = Ipaddresses.Ipaddresses.V1.MacAddress;
+using GrpcIpAddressType = Ipaddresses.Ipaddresses.V1.IpAddressType;
+using GrpcUserMacAddress = Ipaddresses.Ipaddresses.V1.UserMacAddress;
+using GrpcAddressState = Ipaddresses.Ipaddresses.V1.AddressState;
+using GrpcUserIpAddressV2 = Ipaddresses.Ipaddresses.V1.UserIpAddressV2;
+
 
 using IpAddress = Entities.IPAddress;
 using MacAddress = Entities.MACAddress;
@@ -18,7 +18,6 @@ using IpAddressType = Enums.IpAddressType;
 using AddressState = Enums.AddressState;
 using UserMacAddress = Entities.UserMACAddress;
 using UserIpAddressV2 = Entities.UserIPAddressV2;
-using SetAddressStateResult = Enums.SetAddressStateResult;
 
 /// <summary>
 /// Extensions for converting between gRPC and local types, and vice versa.
@@ -35,7 +34,6 @@ using SetAddressStateResult = Enums.SetAddressStateResult;
 /// <seealso cref="GrpcAddressState"/>
 /// <seealso cref="UserIpAddressV2"/>
 /// <seealso cref="GrpcUserIpAddressV2"/>
-/// <seealso cref="GrpcSetAddressStateResult"/>
 public static class GrpcConversionExtensions
 {
     #region IpAddressType
@@ -105,44 +103,6 @@ public static class GrpcConversionExtensions
             GrpcAddressState.Allowed => AddressState.Allowed,
             GrpcAddressState.Banned => AddressState.Banned,
             _ => AddressState.Unknown
-        };
-    }
-
-    #endregion
-
-    #region SetAddressStateResult
-
-    /// <summary>
-    /// Convert a <see cref="SetAddressStateResult"/> to a <see cref="V1.SetUserMacAddressResult"/>.
-    /// </summary>
-    /// <param name="type">The <see cref="SetAddressStateResult"/> to convert.</param>
-    /// <returns>The converted <see cref="SetAddressStateResult"/>.</returns>
-    public static GrpcSetAddressStateResult ToGrpc(this SetAddressStateResult type)
-    {
-        return type switch
-        {
-            SetAddressStateResult.Unknown => GrpcSetAddressStateResult.Unknown,
-            SetAddressStateResult.Changed => GrpcSetAddressStateResult.Changed,
-            SetAddressStateResult.Unchanged => GrpcSetAddressStateResult.Unchanged,
-            SetAddressStateResult.BanExtended => GrpcSetAddressStateResult.BanExtended,
-            _ => GrpcSetAddressStateResult.Unknown
-        };
-    }
-
-    /// <summary>
-    /// Convert a <see cref="GrpcSetAddressStateResult"/> to a <see cref="SetAddressStateResult"/>.
-    /// </summary>
-    /// <param name="type">The <see cref="GrpcSetAddressStateResult"/> to convert.</param>
-    /// <returns>The converted <see cref="GrpcSetAddressStateResult"/>.</returns>
-    public static SetAddressStateResult FromGrpc(this GrpcSetAddressStateResult type)
-    {
-        return type switch
-        {
-            GrpcSetAddressStateResult.Unknown => SetAddressStateResult.Unknown,
-            GrpcSetAddressStateResult.Changed => SetAddressStateResult.Changed,
-            GrpcSetAddressStateResult.Unchanged => SetAddressStateResult.Unchanged,
-            GrpcSetAddressStateResult.BanExtended => SetAddressStateResult.BanExtended,
-            _ => SetAddressStateResult.Unknown
         };
     }
 

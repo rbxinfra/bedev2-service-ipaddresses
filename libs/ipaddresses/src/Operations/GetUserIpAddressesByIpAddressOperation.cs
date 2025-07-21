@@ -7,6 +7,7 @@ using Google.Protobuf.WellKnownTypes;
 
 using EventLog;
 using Operations;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
@@ -15,7 +16,7 @@ using Extensions;
 /// <summary>
 /// Operation to get <see cref="UserIPAddressV2"/> entities by <see cref="IPAddress.Address"/>
 /// </summary>
-public class GetUserIpAddressesByIpAddressOperation : IResultOperation<V1.GetUserIpAddressesByIpAddressRequest, V1.GetUserIpAddressesByIpAddressResponse>
+public class GetUserIpAddressesByIpAddressOperation : IResultOperation<GetUserIpAddressesByIpAddressRequest, GetUserIpAddressesByIpAddressResponse>
 {
     private readonly ILogger _logger;
     private readonly IIpAddressHelper _ipAddressHelper;
@@ -38,7 +39,7 @@ public class GetUserIpAddressesByIpAddressOperation : IResultOperation<V1.GetUse
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetUserIpAddressesByIpAddressResponse Output, OperationError Error) Execute(V1.GetUserIpAddressesByIpAddressRequest request)
+    public (GetUserIpAddressesByIpAddressResponse Output, OperationError Error) Execute(GetUserIpAddressesByIpAddressRequest request)
     {
         if (request.IpAddressId == default(long)) return (null, new(IpAddressError.InvalidIpAddress));
 
@@ -48,12 +49,10 @@ public class GetUserIpAddressesByIpAddressOperation : IResultOperation<V1.GetUse
             request.Count
         );
 
-        return (new V1.GetUserIpAddressesByIpAddressResponse
-        {
+        return (new GetUserIpAddressesByIpAddressResponse {
             UserIpAddresses =
             {
-                ipAddresses.Select(ip => new V1.UserIpAddressV2
-                {
+                ipAddresses.Select(ip => new UserIpAddressV2 {
                     UserId = ip.UserID,
                     IpAddress = IPAddress.Get(ip.IPAddressID).ToGrpc(),
                     LastSeenTime = ip.LastSeen.HasValue

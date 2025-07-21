@@ -7,6 +7,7 @@ using Google.Protobuf.WellKnownTypes;
 
 using EventLog;
 using Operations;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
@@ -15,7 +16,7 @@ using Extensions;
 /// <summary>
 /// Operation to get <see cref="UserMACAddress"/> entities by User ID
 /// </summary>
-public class GetUserMacAddressesByUserIdOperation : IResultOperation<V1.GetUserMacAddressesByUserIdRequest, V1.GetUserMacAddressesByUserIdResponse>
+public class GetUserMacAddressesByUserIdOperation : IResultOperation<GetUserMacAddressesByUserIdRequest, GetUserMacAddressesByUserIdResponse>
 {
     private readonly ILogger _logger;
 
@@ -32,7 +33,7 @@ public class GetUserMacAddressesByUserIdOperation : IResultOperation<V1.GetUserM
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetUserMacAddressesByUserIdResponse Output, OperationError Error) Execute(V1.GetUserMacAddressesByUserIdRequest request)
+    public (GetUserMacAddressesByUserIdResponse Output, OperationError Error) Execute(GetUserMacAddressesByUserIdRequest request)
     {
         if (request.UserId == default(long)) return (null, new(IpAddressError.InvalidUserId));
 
@@ -42,11 +43,9 @@ public class GetUserMacAddressesByUserIdOperation : IResultOperation<V1.GetUserM
             request.Count
         );
 
-        return (new V1.GetUserMacAddressesByUserIdResponse
-        {
-            UserMacAddresses =
-            {
-                macAddresses.Select(mac => new V1.UserMacAddress
+        return (new GetUserMacAddressesByUserIdResponse {
+            UserMacAddresses = {
+                macAddresses.Select(mac => new UserMacAddress
                 {
                     UserId = mac.UserID,
                     MacAddress = MACAddress.Get(mac.MACAddressID).ToGrpc(),

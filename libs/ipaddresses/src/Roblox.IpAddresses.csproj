@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Description>Logic and operations implementation for Roblox.Ipaddresses.Service</Description>
+		<Description>Logic and operations implementation for Roblox.IpAddresses.Service</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="Roblox.Ipaddresses.Service" />
+		<InternalsVisibleTo Include="Roblox.IpAddresses.Service" />
 	</ItemGroup>
 	
 	<ItemGroup>

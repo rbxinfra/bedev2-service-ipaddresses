@@ -3,7 +3,7 @@
 using System.ComponentModel;
 
 /// <summary>
-/// Enum to indicate type of error or failures from the Ipaddresses service.
+/// Enum to indicate type of error or failures from the IpAddresses service.
 /// </summary>
 public enum IpAddressError
 {

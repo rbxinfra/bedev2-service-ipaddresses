@@ -43,10 +43,8 @@ public class GetUserMacAddressesByUserIdOperation : IResultOperation<GetUserMacA
             request.Count
         );
 
-        return (new GetUserMacAddressesByUserIdResponse
-        {
-            UserMacAddresses =
-            {
+        return (new GetUserMacAddressesByUserIdResponse {
+            UserMacAddresses = {
                 macAddresses.Select(mac => new UserMacAddress
                 {
                     UserId = mac.UserID,

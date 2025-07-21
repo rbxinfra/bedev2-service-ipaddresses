@@ -44,8 +44,7 @@ public class GetMacAddressCountByUserIdOperation : IResultOperation<GetMacAddres
         var user = _membershipDomainFactories.UserFactory.GetUser(request.UserId);
         if (user == null) return (null, new(IpAddressError.InvalidUserId));
 
-        return (new GetMacAddressCountByUserIdResponse
-        {
+        return (new GetMacAddressCountByUserIdResponse {
             Count = UserMACAddress.GetTotalNumberOfUserMACAddressesByUser(user.Id)
         }, null);
     }

@@ -49,8 +49,7 @@ public class GetUserIpAddressesByUserIdOperation : IResultOperation<GetUserIpAdd
             request.Count
         );
 
-        return (new GetUserIpAddressesByUserIdResponse
-        {
+        return (new GetUserIpAddressesByUserIdResponse {
             UserIpAddresses = 
             {
                 ipAddresses.Select(ip => new UserIpAddressV2 {

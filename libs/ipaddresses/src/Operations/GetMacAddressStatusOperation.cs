@@ -43,8 +43,7 @@ public class GetMacAddressStatusOperation : IResultOperation<GetMacAddressStatus
 
         var macAddress = MACAddress.GetOrCreate(request.MacAddress);
 
-        return (new GetMacAddressStatusResponse
-        {
+        return (new GetMacAddressStatusResponse {
             MacAddressState = macAddress.State.ToGrpc(),
         }, null);
     }

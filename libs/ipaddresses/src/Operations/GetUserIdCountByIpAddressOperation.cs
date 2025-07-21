@@ -42,8 +42,7 @@ public class GetUserIdCountByIpAddressOperation : IResultOperation<GetUserIdCoun
 
         var ipAddress = IPAddress.GetOrCreate(request.IpAddress);
 
-        return (new GetUserIdCountByIpAddressResponse
-        {
+        return (new GetUserIdCountByIpAddressResponse {
             Count = UserIPAddressV2.GetTotalNumberOfUserIPAddressesV2ByAddress(ipAddress.ID)
         }, null);
     }

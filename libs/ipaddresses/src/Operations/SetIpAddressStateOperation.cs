@@ -46,8 +46,7 @@ public class SetIpAddressStateOperation : IResultOperation<SetIpAddressStateRequ
 
         if (ipAddressState < AddressState.Allowed ||
             ipAddressState > AddressState.Banned)
-            return (new SetIpAddressStateResponse
-            {
+            return (new SetIpAddressStateResponse {
                 Result = SetAddressStateResult.Unknown
             }, new(IpAddressError.UnsupportedIpAddressState));
 

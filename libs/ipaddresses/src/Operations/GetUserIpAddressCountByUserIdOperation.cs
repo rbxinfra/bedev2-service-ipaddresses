@@ -5,10 +5,10 @@ using System;
 using EventLog;
 using Operations;
 using Platform.Membership;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
-using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get IP Address count by User ID

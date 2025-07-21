@@ -6,7 +6,6 @@ using System;
 using System.Threading.Tasks;
 
 using Web.Framework.Services.Grpc;
-
 using Ipaddresses.Ipaddresses.V1;
 
 using IpAddressesAPIGrpc = Roblox.Ipaddresses.Ipaddresses.V1.IpAddressesAPI;

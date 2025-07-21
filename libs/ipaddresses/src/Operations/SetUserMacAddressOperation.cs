@@ -6,10 +6,10 @@ using System.Linq;
 using EventLog;
 using Operations;
 using Platform.Membership;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
-using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to update <see cref="UserMACAddress"/> entity

@@ -4,12 +4,12 @@ using System;
 
 using EventLog;
 using Operations;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
 using Extensions;
-using Ipaddresses.Ipaddresses.V1;
-using AddressState = IpAddresses.Enums.AddressState;
+using AddressState = Enums.AddressState;
 
 /// <summary>
 /// Operation to update <see cref="IPAddress"/> entities state

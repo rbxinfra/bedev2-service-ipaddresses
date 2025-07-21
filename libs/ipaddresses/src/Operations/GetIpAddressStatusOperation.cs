@@ -4,11 +4,11 @@ using System;
 
 using EventLog;
 using Operations;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
 using Extensions;
-using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get the status of an Ip Address

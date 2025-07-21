@@ -7,11 +7,11 @@ using Google.Protobuf.WellKnownTypes;
 
 using EventLog;
 using Operations;
+using Ipaddresses.Ipaddresses.V1;
 
 using Enums;
 using Entities;
 using Extensions;
-using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get <see cref="UserIPAddressV2"/> entities by <see cref="IPAddress.Address"/>

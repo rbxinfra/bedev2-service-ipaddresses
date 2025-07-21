@@ -11,6 +11,7 @@ using GrpcUserMacAddress = Ipaddresses.Ipaddresses.V1.UserMacAddress;
 using GrpcAddressState = Ipaddresses.Ipaddresses.V1.AddressState;
 using GrpcUserIpAddressV2 = Ipaddresses.Ipaddresses.V1.UserIpAddressV2;
 
+
 using IpAddress = Entities.IPAddress;
 using MacAddress = Entities.MACAddress;
 using IpAddressType = Enums.IpAddressType;
@@ -33,7 +34,6 @@ using UserIpAddressV2 = Entities.UserIPAddressV2;
 /// <seealso cref="GrpcAddressState"/>
 /// <seealso cref="UserIpAddressV2"/>
 /// <seealso cref="GrpcUserIpAddressV2"/>
-/// <seealso cref="GrpcSetAddressStateResult"/>
 public static class GrpcConversionExtensions
 {
     #region IpAddressType

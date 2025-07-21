@@ -42,35 +42,35 @@ public class SetMacAddressStateOperation : IResultOperation<V1.SetMacAddressStat
 
         var macAddressState = request.MacAddressState.FromGrpc();
 
-        if (macAddressState < MacAddressState.Allowed ||
-            macAddressState > MacAddressState.Banned)
+        if (macAddressState < AddressState.Allowed ||
+            macAddressState > AddressState.Banned)
             return (new V1.SetMacAddressStateResponse
             {
-                Result = V1.SetMacAddressStateResult.Unknown
+                Result = V1.SetAddressStateResult.Unknown
             }, new(IpAddressError.UnsupportedMacAddressState));
 
         var macAddress = MACAddress.GetOrCreate(request.MacAddress);
         if (macAddress.State != macAddressState)
         {
             macAddress.State = macAddressState;
-            if (macAddressState == MacAddressState.Banned)
+            if (macAddressState == AddressState.Banned)
             {
                 macAddress.Expiration = DateTime.Now.AddDays(100);
                 return (new V1.SetMacAddressStateResponse
                 {
-                    Result = V1.SetMacAddressStateResult.BanExtended
+                    Result = V1.SetAddressStateResult.BanExtended
                 }, null);
             }
 
             return (new V1.SetMacAddressStateResponse
             {
-                Result = V1.SetMacAddressStateResult.Changed
+                Result = V1.SetAddressStateResult.Changed
             }, null);
         }
 
         return (new V1.SetMacAddressStateResponse
         {
-            Result = V1.SetMacAddressStateResult.Unchanged
+            Result = V1.SetAddressStateResult.Unchanged
         }, null);
     }
 }

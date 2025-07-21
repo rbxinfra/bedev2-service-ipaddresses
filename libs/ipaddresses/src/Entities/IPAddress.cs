@@ -35,13 +35,13 @@ public class IPAddress : IRobloxEntity<long, IPAddressDAL>, IRemoteCacheableObje
     /// <summary>
     /// Gets or sets the <see cref="State"/> of the <see cref="IPAddress"/>
     /// </summary>
-    public IpAddressState State
+    public AddressState State
     {
         get
         {
             PerformStateExpirationCheck();
 
-            return (IpAddressState)_EntityDAL.State;
+            return (AddressState)_EntityDAL.State;
         }
         set { _EntityDAL.State = (byte)value; }
     }
@@ -85,18 +85,18 @@ public class IPAddress : IRobloxEntity<long, IPAddressDAL>, IRemoteCacheableObje
         {
             PerformStateExpirationCheck();
 
-            return _EntityDAL.State == (byte)IpAddressState.Banned;
+            return _EntityDAL.State == (byte)AddressState.Banned;
         }
     }
 
     private void PerformStateExpirationCheck()
     {
-        if (_EntityDAL.State == (byte)IpAddressState.Banned &&
+        if (_EntityDAL.State == (byte)AddressState.Banned &&
             _EntityDAL.Expiration != null &&
             DateTime.Now >= _EntityDAL.Expiration.Value)
             return;
 
-        State = IpAddressState.Allowed;
+        State = AddressState.Allowed;
         Expiration = null;
         Save();
     }

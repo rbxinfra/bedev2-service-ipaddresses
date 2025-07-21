@@ -8,19 +8,17 @@ using GrpcIpAddress = IpAddresses.V1.IpAddress;
 using GrpcMacAddress = IpAddresses.V1.MacAddress;
 using GrpcIpAddressType = IpAddresses.V1.IpAddressType;
 using GrpcUserMacAddress = IpAddresses.V1.UserMacAddress;
-using GrpcIpAddressState = IpAddresses.V1.IpAddressState;
-using GrpcMacAddressState = IpAddresses.V1.MacAddressState;
+using GrpcAddressState = IpAddresses.V1.AddressState;
 using GrpcUserIpAddressV2 = IpAddresses.V1.UserIpAddressV2;
-using GrpcSetIpAddressStateResult = IpAddresses.V1.SetIpAddressStateResult;
+using GrpcSetAddressStateResult = IpAddresses.V1.SetAddressStateResult;
 
 using IpAddress = Entities.IPAddress;
 using MacAddress = Entities.MACAddress;
 using IpAddressType = Enums.IpAddressType;
-using IpAddressState = Enums.IpAddressState;
-using MacAddressState = Enums.MacAddressState;
+using AddressState = Enums.AddressState;
 using UserMacAddress = Entities.UserMACAddress;
 using UserIpAddressV2 = Entities.UserIPAddressV2;
-using SetIpAddressStateResult = Enums.SetIpAddressStateResult;
+using SetAddressStateResult = Enums.SetAddressStateResult;
 
 /// <summary>
 /// Extensions for converting between gRPC and local types, and vice versa.
@@ -33,13 +31,11 @@ using SetIpAddressStateResult = Enums.SetIpAddressStateResult;
 /// <seealso cref="GrpcIpAddressType"/>
 /// <seealso cref="UserMacAddress"/>
 /// <seealso cref="GrpcUserMacAddress"/>
-/// <seealso cref="IpAddressState"/>
-/// <seealso cref="GrpcIpAddressState"/>
-/// <seealso cref="MacAddressState"/>
-/// <seealso cref="GrpcMacAddressState"/>
+/// <seealso cref="AddressState"/>
+/// <seealso cref="GrpcAddressState"/>
 /// <seealso cref="UserIpAddressV2"/>
 /// <seealso cref="GrpcUserIpAddressV2"/>
-/// <seealso cref="GrpcSetIpAddressStateResult"/>
+/// <seealso cref="GrpcSetAddressStateResult"/>
 public static class GrpcConversionExtensions
 {
     #region IpAddressType
@@ -78,111 +74,75 @@ public static class GrpcConversionExtensions
 
     #endregion
 
-    #region IpAddressState
+    #region AddressState
 
     /// <summary>
-    /// Convert a <see cref="IpAddressState"/> to a <see cref="GrpcIpAddressState"/>.
+    /// Convert a <see cref="AddressState"/> to a <see cref="GrpcAddressState"/>.
     /// </summary>
-    /// <param name="state">The <see cref="IpAddressState"/> to convert.</param>
-    /// <returns>The converted <see cref="IpAddressState"/>.</returns>
-    public static GrpcIpAddressState ToGrpc(this IpAddressState state)
+    /// <param name="state">The <see cref="AddressState"/> to convert.</param>
+    /// <returns>The converted <see cref="AddressState"/>.</returns>
+    public static GrpcAddressState ToGrpc(this AddressState state)
     {
         return state switch
         {
-            IpAddressState.Unknown => GrpcIpAddressState.Unknown,
-            IpAddressState.Allowed => GrpcIpAddressState.Allowed,
-            IpAddressState.Banned => GrpcIpAddressState.Banned,
-            _ => GrpcIpAddressState.Unknown
+            AddressState.Unknown => GrpcAddressState.Unknown,
+            AddressState.Allowed => GrpcAddressState.Allowed,
+            AddressState.Banned => GrpcAddressState.Banned,
+            _ => GrpcAddressState.Unknown
         };
     }
 
     /// <summary>
-    /// Convert a <see cref="GrpcIpAddressState"/> to a <see cref="IpAddressState"/>.
+    /// Convert a <see cref="GrpcAddressState"/> to a <see cref="AddressState"/>.
     /// </summary>
-    /// <param name="state">The <see cref="GrpcIpAddressState"/> to convert.</param>
-    /// <returns>The converted <see cref="IpAddressState"/>.</returns>
-    public static IpAddressState FromGrpc(this GrpcIpAddressState state)
+    /// <param name="state">The <see cref="AddressState"/> to convert.</param>
+    /// <returns>The converted <see cref="AddressState"/>.</returns>
+    public static AddressState FromGrpc(this GrpcAddressState state)
     {
         return state switch
         {
-            GrpcIpAddressState.Unknown => IpAddressState.Unknown,
-            GrpcIpAddressState.Allowed => IpAddressState.Allowed,
-            GrpcIpAddressState.Banned => IpAddressState.Banned,
-            _ => IpAddressState.Unknown
+            GrpcAddressState.Unknown => AddressState.Unknown,
+            GrpcAddressState.Allowed => AddressState.Allowed,
+            GrpcAddressState.Banned => AddressState.Banned,
+            _ => AddressState.Unknown
         };
     }
 
     #endregion
 
-    #region MacAddressState
+    #region SetAddressStateResult
 
     /// <summary>
-    /// Convert a <see cref="MacAddressState"/> to a <see cref="GrpcMacAddressState"/>.
+    /// Convert a <see cref="SetAddressStateResult"/> to a <see cref="V1.SetUserMacAddressResult"/>.
     /// </summary>
-    /// <param name="state">The <see cref="MacAddressState"/> to convert.</param>
-    /// <returns>The converted <see cref="MacAddressState"/>.</returns>
-    public static GrpcMacAddressState ToGrpc(this MacAddressState state)
-    {
-        return state switch
-        {
-            MacAddressState.Unknown => GrpcMacAddressState.Unknown,
-            MacAddressState.Allowed => GrpcMacAddressState.Allowed,
-            MacAddressState.Banned => GrpcMacAddressState.Banned,
-            _ => GrpcMacAddressState.Unknown
-        };
-    }
-
-    /// <summary>
-    /// Convert a <see cref="GrpcMacAddressState"/> to a <see cref="IpAddressState"/>.
-    /// </summary>
-    /// <param name="state">The <see cref="GrpcIpAddressState"/> to convert.</param>
-    /// <returns>The converted <see cref="MacAddressState"/>.</returns>
-    public static MacAddressState FromGrpc(this GrpcMacAddressState state)
-    {
-        return state switch
-        {
-            GrpcMacAddressState.Unknown => MacAddressState.Unknown,
-            GrpcMacAddressState.Allowed => MacAddressState.Allowed,
-            GrpcMacAddressState.Banned => MacAddressState.Banned,
-            _ => MacAddressState.Unknown
-        };
-    }
-
-    #endregion
-
-    #region SetIpAddressStateResult
-
-    /// <summary>
-    /// Convert a <see cref="SetIpAddressStateResult"/> to a <see cref="V1.SetUserMacAddressResult"/>.
-    /// </summary>
-    /// <param name="type">The <see cref="SetIpAddressStateResult"/> to convert.</param>
-    /// <returns>The converted <see cref="SetIpAddressStateResult"/>.</returns>
-    public static GrpcSetIpAddressStateResult ToGrpc(this SetIpAddressStateResult type)
+    /// <param name="type">The <see cref="SetAddressStateResult"/> to convert.</param>
+    /// <returns>The converted <see cref="SetAddressStateResult"/>.</returns>
+    public static GrpcSetAddressStateResult ToGrpc(this SetAddressStateResult type)
     {
         return type switch
         {
-            SetIpAddressStateResult.Unknown => GrpcSetIpAddressStateResult.Unknown,
-            SetIpAddressStateResult.Changed => GrpcSetIpAddressStateResult.Changed,
-            SetIpAddressStateResult.Unchanged => GrpcSetIpAddressStateResult.Unchanged,
-            SetIpAddressStateResult.BanExtended => GrpcSetIpAddressStateResult.BanExtended,
-            _ => GrpcSetIpAddressStateResult.Unknown
+            SetAddressStateResult.Unknown => GrpcSetAddressStateResult.Unknown,
+            SetAddressStateResult.Changed => GrpcSetAddressStateResult.Changed,
+            SetAddressStateResult.Unchanged => GrpcSetAddressStateResult.Unchanged,
+            SetAddressStateResult.BanExtended => GrpcSetAddressStateResult.BanExtended,
+            _ => GrpcSetAddressStateResult.Unknown
         };
     }
 
     /// <summary>
-    /// Convert a <see cref="GrpcSetIpAddressStateResult"/> to a <see cref="SetIpAddressStateResult"/>.
+    /// Convert a <see cref="GrpcSetAddressStateResult"/> to a <see cref="SetAddressStateResult"/>.
     /// </summary>
-    /// <param name="type">The <see cref="GrpcSetIpAddressStateResult"/> to convert.</param>
-    /// <returns>The converted <see cref="GrpcSetIpAddressStateResult"/>.</returns>
-    public static SetIpAddressStateResult FromGrpc(this GrpcSetIpAddressStateResult type)
+    /// <param name="type">The <see cref="GrpcSetAddressStateResult"/> to convert.</param>
+    /// <returns>The converted <see cref="GrpcSetAddressStateResult"/>.</returns>
+    public static SetAddressStateResult FromGrpc(this GrpcSetAddressStateResult type)
     {
         return type switch
         {
-            GrpcSetIpAddressStateResult.Unknown => SetIpAddressStateResult.Unknown,
-            GrpcSetIpAddressStateResult.Changed => SetIpAddressStateResult.Changed,
-            GrpcSetIpAddressStateResult.Unchanged => SetIpAddressStateResult.Unchanged,
-            GrpcSetIpAddressStateResult.BanExtended => SetIpAddressStateResult.BanExtended,
-            _ => SetIpAddressStateResult.Unknown
+            GrpcSetAddressStateResult.Unknown => SetAddressStateResult.Unknown,
+            GrpcSetAddressStateResult.Changed => SetAddressStateResult.Changed,
+            GrpcSetAddressStateResult.Unchanged => SetAddressStateResult.Unchanged,
+            GrpcSetAddressStateResult.BanExtended => SetAddressStateResult.BanExtended,
+            _ => SetAddressStateResult.Unknown
         };
     }
 

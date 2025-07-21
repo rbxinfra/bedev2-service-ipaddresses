@@ -36,13 +36,13 @@ public class MACAddress : IRobloxEntity<long, MACAddressDAL>, ICacheableObject<l
     /// <summary>
     /// Gets the <see cref="State"/> of the <see cref="MACAddress"/>
     /// </summary>
-    public MacAddressState State
+    public AddressState State
     {
         get
         {
             PerformStateExpirationCheck();
 
-            return (MacAddressState)_EntityDAL.State;
+            return (AddressState)_EntityDAL.State;
         }
         set { _EntityDAL.State = (byte)value; }
     }
@@ -86,18 +86,18 @@ public class MACAddress : IRobloxEntity<long, MACAddressDAL>, ICacheableObject<l
         {
             PerformStateExpirationCheck();
 
-            return _EntityDAL.State == (byte)MacAddressState.Banned;
+            return _EntityDAL.State == (byte)AddressState.Banned;
         }
     }
 
     private void PerformStateExpirationCheck()
     {
-        if (_EntityDAL.State == (byte)MacAddressState.Banned &&
+        if (_EntityDAL.State == (byte)AddressState.Banned &&
             _EntityDAL.Expiration != null &&
             DateTime.Now >= _EntityDAL.Expiration.Value)
             return;
 
-        State = MacAddressState.Allowed;
+        State = AddressState.Allowed;
         Expiration = null;
         Save();
     }

@@ -42,27 +42,27 @@ public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateR
 
         var ipAddressState = request.IpAddressState.FromGrpc();
 
-        if (ipAddressState < IpAddressState.Allowed ||
-            ipAddressState > IpAddressState.Banned)
+        if (ipAddressState < AddressState.Allowed ||
+            ipAddressState > AddressState.Banned)
             return (new V1.SetIpAddressStateResponse
             {
-                Result = SetIpAddressStateResult.Unknown.ToGrpc()
+                Result = SetAddressStateResult.Unknown.ToGrpc()
             }, new(IpAddressError.UnsupportedIpAddressState));
 
         var ipAddress = IPAddress.GetOrCreate(request.IpAddress);
         if (ipAddress.State == ipAddressState)
             return (new V1.SetIpAddressStateResponse {
-                Result = SetIpAddressStateResult.Unchanged.ToGrpc()
+                Result = SetAddressStateResult.Unchanged.ToGrpc()
             }, null);
 
-        if (ipAddressState == IpAddressState.Banned)
+        if (ipAddressState == AddressState.Banned)
         {
-            ipAddress.State = IpAddressState.Banned;
+            ipAddress.State = AddressState.Banned;
             ipAddress.Expiration = DateTime.Now.AddDays(100);
             ipAddress.Save();
 
             return (new V1.SetIpAddressStateResponse { 
-                Result = SetIpAddressStateResult.BanExtended.ToGrpc() 
+                Result = SetAddressStateResult.BanExtended.ToGrpc() 
             }, null);
         }
 
@@ -70,7 +70,7 @@ public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateR
         ipAddress.Save();
 
         return (new V1.SetIpAddressStateResponse { 
-            Result = SetIpAddressStateResult.Changed.ToGrpc() 
+            Result = SetAddressStateResult.Changed.ToGrpc() 
         }, null);
     }
 }

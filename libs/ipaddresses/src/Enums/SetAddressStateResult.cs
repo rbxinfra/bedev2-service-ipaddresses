@@ -1,9 +1,9 @@
 ﻿namespace Roblox.IpAddresses.Enums;
 
 /// <summary>
-/// Result for SetIpAddressStateOperation
+/// Result for operations which set the addresses state
 /// </summary>
-public enum SetIpAddressStateResult
+public enum SetAddressStateResult
 {
     /// <summary>
     /// Unknown Result

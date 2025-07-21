@@ -151,7 +151,7 @@ message GetIpAddressStatusRequest {
 message GetIpAddressStatusResponse {
 	string ip_address = 1;
 	IpAddressType ip_address_type = 2;
-	IpAddressState ip_address_state = 3;
+	AddressState ip_address_state = 3;
 }
 
 message GetMacAddressCountByUserIdRequest {
@@ -167,7 +167,7 @@ message GetMacAddressStatusRequest {
 }
 
 message GetMacAddressStatusResponse {
-	MacAddressState mac_address_state = 1;
+	AddressState mac_address_state = 1;
 }
 
 message SetUserIpAddressRequest {
@@ -190,18 +190,18 @@ message SetUserMacAddressResponse {
 
 message SetIpAddressStateRequest {
 	string ip_address = 1;
-	IpAddressState ip_address_state = 2;
+	AddressState ip_address_state = 2;
 }
 
 message SetIpAddressStateResponse {
-	SetIpAddressStateResult result = 1;
+	SetAddressStateResult result = 1;
 }
 
 message SetMacAddressStateRequest {
 	string mac_address = 1;
-	MacAddressState mac_address_state = 2;
+	AddressState mac_address_state = 2;
 }
 
 message SetMacAddressStateResponse {
-	SetMacAddressStateResult result = 1;
+	SetAddressStateResult result = 1;
 }

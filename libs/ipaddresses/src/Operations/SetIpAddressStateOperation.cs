@@ -8,11 +8,13 @@ using Operations;
 using Enums;
 using Entities;
 using Extensions;
+using Ipaddresses.Ipaddresses.V1;
+using AddressState = IpAddresses.Enums.AddressState;
 
 /// <summary>
 /// Operation to update <see cref="IPAddress"/> entities state
 /// </summary>
-public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateRequest, V1.SetIpAddressStateResponse>
+public class SetIpAddressStateOperation : IResultOperation<SetIpAddressStateRequest, SetIpAddressStateResponse>
 {
     private readonly ILogger _logger;
     private readonly IIpAddressHelper _ipAddressHelper;
@@ -35,7 +37,7 @@ public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateR
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.SetIpAddressStateResponse Output, OperationError Error) Execute(V1.SetIpAddressStateRequest request)
+    public (SetIpAddressStateResponse Output, OperationError Error) Execute(SetIpAddressStateRequest request)
     {
         if (string.IsNullOrEmpty(request.IpAddress)) return (null, new(IpAddressError.InvalidIpAddress));
         if (!_ipAddressHelper.IsValidIpAddress(request.IpAddress)) return (null, new(IpAddressError.InvalidIpAddress));
@@ -44,15 +46,15 @@ public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateR
 
         if (ipAddressState < AddressState.Allowed ||
             ipAddressState > AddressState.Banned)
-            return (new V1.SetIpAddressStateResponse
+            return (new SetIpAddressStateResponse
             {
-                Result = SetAddressStateResult.Unknown.ToGrpc()
+                Result = SetAddressStateResult.Unknown
             }, new(IpAddressError.UnsupportedIpAddressState));
 
         var ipAddress = IPAddress.GetOrCreate(request.IpAddress);
         if (ipAddress.State == ipAddressState)
-            return (new V1.SetIpAddressStateResponse {
-                Result = SetAddressStateResult.Unchanged.ToGrpc()
+            return (new SetIpAddressStateResponse {
+                Result = SetAddressStateResult.Unchanged
             }, null);
 
         if (ipAddressState == AddressState.Banned)
@@ -61,16 +63,16 @@ public class SetIpAddressStateOperation : IResultOperation<V1.SetIpAddressStateR
             ipAddress.Expiration = DateTime.Now.AddDays(100);
             ipAddress.Save();
 
-            return (new V1.SetIpAddressStateResponse { 
-                Result = SetAddressStateResult.BanExtended.ToGrpc() 
+            return (new SetIpAddressStateResponse { 
+                Result = SetAddressStateResult.BanExtended 
             }, null);
         }
 
         ipAddress.State = ipAddressState;
         ipAddress.Save();
 
-        return (new V1.SetIpAddressStateResponse { 
-            Result = SetAddressStateResult.Changed.ToGrpc() 
+        return (new SetIpAddressStateResponse { 
+            Result = SetAddressStateResult.Changed 
         }, null);
     }
 }

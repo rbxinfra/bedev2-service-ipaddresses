@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roblox.IpAddresses", "libs\ipaddresses\src\Roblox.IpAddresses.csproj", "{C0521D81-4C94-9E7B-6CA5-AC295612681C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roblox.IpAddresses.Service", "services\ipaddresses-service\src\Roblox.IpAddresses.Service.csproj", "{7BE354B2-65DB-D1F1-4C3D-23C953AD7C74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roblox.Ipaddresses.Service", "services\ipaddresses-service\src\Roblox.Ipaddresses.Service.csproj", "{7BE354B2-65DB-D1F1-4C3D-23C953AD7C74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

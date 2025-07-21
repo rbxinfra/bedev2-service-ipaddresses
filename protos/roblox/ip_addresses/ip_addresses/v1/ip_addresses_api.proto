@@ -4,15 +4,15 @@
 //
 syntax = "proto3";
 
-package roblox.ipaddresses.v1;
+package roblox.ipaddresses.ipaddresses.v1;
 
-option csharp_namespace = "Roblox.IpAddresses.V1";
+option csharp_namespace = "Roblox.Ipaddresses.Ipaddresses.V1";
 option go_package = "roblox/ipaddressesv1";
 option java_multiple_files = true;
 option java_outer_classname = "IpAddressesApiProto";
-option java_package = "com.roblox.ipaddresses.v1";
+option java_package = "com.roblox.ipaddresses.ipaddresses.v1";
 
-import "roblox/ip-addresses/v1/ip_addresses.proto";
+import "roblox/ip_addresses/ip_addresses/v1/ip_addresses.proto";
 
 // Ip Addresses Service APIs.
 service IpAddressesAPI {

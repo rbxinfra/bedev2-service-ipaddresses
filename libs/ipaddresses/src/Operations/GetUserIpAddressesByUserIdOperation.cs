@@ -11,11 +11,12 @@ using Operations;
 using Enums;
 using Entities;
 using Extensions;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get <see cref="UserIPAddressV2"/> entities by User ID
 /// </summary>
-public class GetUserIpAddressesByUserIdOperation : IResultOperation<V1.GetUserIpAddressesByUserIdRequest, V1.GetUserIpAddressesByUserIdResponse>
+public class GetUserIpAddressesByUserIdOperation : IResultOperation<GetUserIpAddressesByUserIdRequest, GetUserIpAddressesByUserIdResponse>
 {
     private readonly ILogger _logger;
     private readonly IIpAddressHelper _ipAddressHelper;
@@ -38,7 +39,7 @@ public class GetUserIpAddressesByUserIdOperation : IResultOperation<V1.GetUserIp
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetUserIpAddressesByUserIdResponse Output, OperationError Error) Execute(V1.GetUserIpAddressesByUserIdRequest request)
+    public (GetUserIpAddressesByUserIdResponse Output, OperationError Error) Execute(GetUserIpAddressesByUserIdRequest request)
     {
         if (request.UserId == default(long)) return (null, new(IpAddressError.InvalidUserId));
 
@@ -48,12 +49,11 @@ public class GetUserIpAddressesByUserIdOperation : IResultOperation<V1.GetUserIp
             request.Count
         );
 
-        return (new V1.GetUserIpAddressesByUserIdResponse
+        return (new GetUserIpAddressesByUserIdResponse
         {
-            UserIpAddresses =
+            UserIpAddresses = 
             {
-                ipAddresses.Select(ip => new V1.UserIpAddressV2
-                {
+                ipAddresses.Select(ip => new UserIpAddressV2 {
                     UserId = ip.UserID,
                     IpAddress = IPAddress.Get(ip.IPAddressID).ToGrpc(),
                     LastSeenTime = ip.LastSeen.HasValue

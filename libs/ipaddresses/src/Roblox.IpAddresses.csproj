@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Description>Logic and operations implementation for Roblox.IpAddresses.Service</Description>
+		<Description>Logic and operations implementation for Roblox.Ipaddresses.Service</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="Roblox.IpAddresses.Service" />
+		<InternalsVisibleTo Include="Roblox.Ipaddresses.Service" />
 	</ItemGroup>
 	
 	<ItemGroup>
@@ -27,8 +27,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Protobuf ProtoRoot="..\..\..\protos" Include="..\..\..\protos\roblox\ip-addresses\v1\ip_addresses.proto" Link="roblox\ip-addresses\v1\ip_addresses_api.proto" GrpcServices="None" />
-		<Protobuf ProtoRoot="..\..\..\protos" Include="..\..\..\protos\roblox\ip-addresses\v1\ip_addresses_api.proto" Link="roblox\ip-addresses\v1\ip_addresses_api.proto" GrpcServices="Server" />
+		<Protobuf ProtoRoot="..\..\..\protos" Include="..\..\..\protos\roblox\ip_addresses\ip_addresses\v1\ip_addresses.proto" Link="roblox\ip_addresses\ip_addresses\v1\ip_addresses_api.proto" GrpcServices="None" />
+		<Protobuf ProtoRoot="..\..\..\protos" Include="..\..\..\protos\roblox\ip_addresses\ip_addresses\v1\ip_addresses_api.proto" Link="roblox\ip_addresses\ip_addresses\v1\ip_addresses_api.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 </Project>

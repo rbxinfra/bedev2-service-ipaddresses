@@ -7,11 +7,12 @@ using Operations;
 
 using Enums;
 using Entities;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get User ID count by MAC Address
 /// </summary>
-public class GetUserIdCountByMacAddressOperation : IResultOperation<V1.GetUserIdCountByMacAddressRequest, V1.GetUserIdCountByMacAddressResponse>
+public class GetUserIdCountByMacAddressOperation : IResultOperation<GetUserIdCountByMacAddressRequest, GetUserIdCountByMacAddressResponse>
 {
     private readonly ILogger _logger;
     private readonly IMacAddressHelper _macAddressHelper;
@@ -34,15 +35,14 @@ public class GetUserIdCountByMacAddressOperation : IResultOperation<V1.GetUserId
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetUserIdCountByMacAddressResponse Output, OperationError Error) Execute(V1.GetUserIdCountByMacAddressRequest request)
+    public (GetUserIdCountByMacAddressResponse Output, OperationError Error) Execute(GetUserIdCountByMacAddressRequest request)
     {
         if (string.IsNullOrEmpty(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
         if (!_macAddressHelper.IsValidMacAddress(request.MacAddress)) return (null, new(IpAddressError.InvalidMacAddress));
 
         var macAddress = MACAddress.GetOrCreate(request.MacAddress);
 
-        return (new V1.GetUserIdCountByMacAddressResponse
-        {
+        return (new GetUserIdCountByMacAddressResponse {
             Count = UserMACAddress.GetTotalNumberOfUserMACAddressesByAddress(macAddress.ID)
         }, null);
     }

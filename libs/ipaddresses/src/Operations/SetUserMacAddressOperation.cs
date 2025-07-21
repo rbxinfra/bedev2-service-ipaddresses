@@ -9,12 +9,12 @@ using Platform.Membership;
 
 using Enums;
 using Entities;
-using Extensions;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to update <see cref="UserMACAddress"/> entity
 /// </summary>
-public class SetUserMacAddressOperation : IResultOperation<V1.SetUserMacAddressRequest, V1.SetUserMacAddressResponse>
+public class SetUserMacAddressOperation : IResultOperation<SetUserMacAddressRequest, SetUserMacAddressResponse>
 {
     private readonly ILogger _logger;
     private readonly MembershipDomainFactories _membershipDomainFactories;
@@ -42,7 +42,7 @@ public class SetUserMacAddressOperation : IResultOperation<V1.SetUserMacAddressR
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.SetUserMacAddressResponse Output, OperationError Error) Execute(V1.SetUserMacAddressRequest request)
+    public (SetUserMacAddressResponse Output, OperationError Error) Execute(SetUserMacAddressRequest request)
     {
         var user = _membershipDomainFactories.UserFactory.GetUser(request.UserId);
         if (user == null) return (null, new(IpAddressError.InvalidUserId));
@@ -53,9 +53,8 @@ public class SetUserMacAddressOperation : IResultOperation<V1.SetUserMacAddressR
         var macAddresses = UserMACAddress.GetUserMACAddressesByUserPaged(request.UserId, 0, 100);
         if (macAddresses.Any(x => MACAddress.Get(x.MACAddressID).Address == request.MacAddress))
         {
-            return (new V1.SetUserMacAddressResponse
-            {
-                Result = V1.SetUserMacAddressResult.AlreadyAssociated
+            return (new SetUserMacAddressResponse {
+                Result = SetUserMacAddressResult.AlreadyAssociated
             }, null);
         }
 
@@ -65,9 +64,8 @@ public class SetUserMacAddressOperation : IResultOperation<V1.SetUserMacAddressR
         userMACAddress.UserID = request.UserId;
         userMACAddress.Save();
 
-        return (new V1.SetUserMacAddressResponse 
-        { 
-            Result = V1.SetUserMacAddressResult.Associated 
+        return (new SetUserMacAddressResponse { 
+            Result = SetUserMacAddressResult.Associated 
         }, null);
     }
 }

@@ -8,11 +8,12 @@ using Platform.Membership;
 
 using Enums;
 using Entities;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get IP Address count by User ID
 /// </summary>
-public class GetUserIpAddressCountByUserIdOperation : IResultOperation<V1.GetUserIpAddressCountByUserIdRequest, V1.GetUserIpAddressCountByUserIdResponse>
+public class GetUserIpAddressCountByUserIdOperation : IResultOperation<GetUserIpAddressCountByUserIdRequest, GetUserIpAddressCountByUserIdResponse>
 {
     private readonly ILogger _logger;
     private readonly MembershipDomainFactories _membershipDomainFactories;
@@ -38,13 +39,12 @@ public class GetUserIpAddressCountByUserIdOperation : IResultOperation<V1.GetUse
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetUserIpAddressCountByUserIdResponse Output, OperationError Error) Execute(V1.GetUserIpAddressCountByUserIdRequest request)
+    public (GetUserIpAddressCountByUserIdResponse Output, OperationError Error) Execute(GetUserIpAddressCountByUserIdRequest request)
     {
         var user = _membershipDomainFactories.UserFactory.GetUser(request.UserId);
         if (user == null) return (null, new(IpAddressError.InvalidUserId));
 
-        return (new V1.GetUserIpAddressCountByUserIdResponse
-        {
+        return (new GetUserIpAddressCountByUserIdResponse {
             Count = UserIPAddressV2.GetTotalNumberOfUserIPAddressesV2ByUser(user.Id)
         }, null);
     }

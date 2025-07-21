@@ -9,12 +9,12 @@ using Platform.Membership;
 
 using Enums;
 using Entities;
-using Extensions;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to update <see cref="UserMACAddress"/> entity
 /// </summary>
-public class SetUserIpAddressOperation : IResultOperation<V1.SetUserIpAddressRequest, V1.SetUserIpAddressResponse>
+public class SetUserIpAddressOperation : IResultOperation<SetUserIpAddressRequest, SetUserIpAddressResponse>
 {
     private readonly ILogger _logger;
     private readonly MembershipDomainFactories _membershipDomainFactories;
@@ -42,7 +42,7 @@ public class SetUserIpAddressOperation : IResultOperation<V1.SetUserIpAddressReq
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.SetUserIpAddressResponse Output, OperationError Error) Execute(V1.SetUserIpAddressRequest request)
+    public (SetUserIpAddressResponse Output, OperationError Error) Execute(SetUserIpAddressRequest request)
     {
         var user = _membershipDomainFactories.UserFactory.GetUser(request.UserId);
         if (user == null) return (null, new(IpAddressError.InvalidUserId));
@@ -53,9 +53,8 @@ public class SetUserIpAddressOperation : IResultOperation<V1.SetUserIpAddressReq
         var ipAddresses = UserIPAddressV2.GetUserIPAddressesV2ByUserPaged(request.UserId, 0, 100);
         if (ipAddresses.Any(x => IPAddress.Get(x.IPAddressID).Address == request.IpAddress))
         {
-            return (new V1.SetUserIpAddressResponse
-            {
-                Result = V1.SetUserIpAddressResult.AlreadyAssociated
+            return (new SetUserIpAddressResponse {
+                Result = SetUserIpAddressResult.AlreadyAssociated
             }, null);
         }
 
@@ -65,9 +64,8 @@ public class SetUserIpAddressOperation : IResultOperation<V1.SetUserIpAddressReq
         userIpAddress.UserID = request.UserId;
         userIpAddress.Save();
 
-        return (new V1.SetUserIpAddressResponse 
-        { 
-            Result = V1.SetUserIpAddressResult.Associated
+        return (new SetUserIpAddressResponse { 
+            Result = SetUserIpAddressResult.Associated
         }, null);
     }
 }

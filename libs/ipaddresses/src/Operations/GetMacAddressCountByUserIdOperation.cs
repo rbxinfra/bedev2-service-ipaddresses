@@ -8,11 +8,12 @@ using Platform.Membership;
 
 using Enums;
 using Entities;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get MAC Address count by User ID
 /// </summary>
-public class GetMacAddressCountByUserIdOperation : IResultOperation<V1.GetMacAddressCountByUserIdRequest, V1.GetMacAddressCountByUserIdResponse>
+public class GetMacAddressCountByUserIdOperation : IResultOperation<GetMacAddressCountByUserIdRequest, GetMacAddressCountByUserIdResponse>
 {
     private readonly ILogger _logger;
     private readonly MembershipDomainFactories _membershipDomainFactories;
@@ -38,12 +39,12 @@ public class GetMacAddressCountByUserIdOperation : IResultOperation<V1.GetMacAdd
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetMacAddressCountByUserIdResponse Output, OperationError Error) Execute(V1.GetMacAddressCountByUserIdRequest request)
+    public (GetMacAddressCountByUserIdResponse Output, OperationError Error) Execute(GetMacAddressCountByUserIdRequest request)
     {
         var user = _membershipDomainFactories.UserFactory.GetUser(request.UserId);
         if (user == null) return (null, new(IpAddressError.InvalidUserId));
 
-        return (new V1.GetMacAddressCountByUserIdResponse
+        return (new GetMacAddressCountByUserIdResponse
         {
             Count = UserMACAddress.GetTotalNumberOfUserMACAddressesByUser(user.Id)
         }, null);

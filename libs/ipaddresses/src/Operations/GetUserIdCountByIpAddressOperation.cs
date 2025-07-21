@@ -7,11 +7,12 @@ using Operations;
 
 using Enums;
 using Entities;
+using Ipaddresses.Ipaddresses.V1;
 
 /// <summary>
 /// Operation to get User ID count by IP Address
 /// </summary>
-public class GetUserIdCountByIpAddressOperation : IResultOperation<V1.GetUserIdCountByIpAddressRequest, V1.GetUserIdCountByIpAddressResponse>
+public class GetUserIdCountByIpAddressOperation : IResultOperation<GetUserIdCountByIpAddressRequest, GetUserIdCountByIpAddressResponse>
 {
     private readonly ILogger _logger;
     private readonly IIpAddressHelper _ipAddressHelper;
@@ -34,14 +35,14 @@ public class GetUserIdCountByIpAddressOperation : IResultOperation<V1.GetUserIdC
     }
 
     /// <inheritdoc cref="IResultOperation{TRequest, TResponse}.Execute(TRequest)"/>
-    public (V1.GetUserIdCountByIpAddressResponse Output, OperationError Error) Execute(V1.GetUserIdCountByIpAddressRequest request)
+    public (GetUserIdCountByIpAddressResponse Output, OperationError Error) Execute(GetUserIdCountByIpAddressRequest request)
     {
         if (string.IsNullOrEmpty(request.IpAddress)) return (null, new(IpAddressError.InvalidIpAddress));
         if (!_ipAddressHelper.IsValidIpAddress(request.IpAddress)) return (null, new(IpAddressError.InvalidIpAddress));
 
         var ipAddress = IPAddress.GetOrCreate(request.IpAddress);
 
-        return (new V1.GetUserIdCountByIpAddressResponse
+        return (new GetUserIdCountByIpAddressResponse
         {
             Count = UserIPAddressV2.GetTotalNumberOfUserIPAddressesV2ByAddress(ipAddress.ID)
         }, null);

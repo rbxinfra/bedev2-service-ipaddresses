@@ -4,13 +4,13 @@
 //
 syntax = "proto3";
 
-package roblox.ipaddresses.v1;
+package roblox.ipaddresses.ipaddresses.v1;
 
-option csharp_namespace = "Roblox.IpAddresses.V1";
+option csharp_namespace = "Roblox.Ipaddresses.Ipaddresses.V1";
 option go_package = "roblox/ipaddressesv1";
 option java_multiple_files = true;
 option java_outer_classname = "IpAddressesApiProto";
-option java_package = "com.roblox.ipaddresses.v1";
+option java_package = "com.roblox.ipaddresses.ipaddresses.v1";
 
 import "google/protobuf/timestamp.proto";
 
